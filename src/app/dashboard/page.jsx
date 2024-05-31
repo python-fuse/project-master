@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const page = () => {
-  return (
-    <div>
-      Dashboard
-    </div>
-  )
-}
+  return <section className="px-4 py-2"></section>;
+};
 
-export default page
+export default page;

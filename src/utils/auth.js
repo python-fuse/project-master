@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { Account, ID } from "appwrite";
 import client from "./appwrite";
@@ -25,6 +25,7 @@ export const UserProvider = ({ children }) => {
     } catch (e) {
       console.log(e);
       setError(e);
+      setLoading(false);
       err();
     }
   };
@@ -40,6 +41,7 @@ export const UserProvider = ({ children }) => {
     } catch (e) {
       console.log(e);
       setError(e);
+      setLoading(false);
       err();
     }
   };
@@ -53,6 +55,7 @@ export const UserProvider = ({ children }) => {
       setLoading(false);
     } catch (e) {
       console.log(e);
+      setLoading(false);
       setError(e);
     }
   };
@@ -61,10 +64,8 @@ export const UserProvider = ({ children }) => {
     // Optionally, you can add logic here to check if the user is already logged in
     const getCurrentUser = async () => {
       try {
-        setLoading(true);
         const currentUser = await account.get();
         setUser(currentUser);
-        setLoading(false);
       } catch (e) {
         console.log(e);
         setError(e);

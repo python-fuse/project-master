@@ -15,6 +15,7 @@ const LoginForm = () => {
   const router = useRouter();
   const toast = useToast();
   const { logIn, error, loading } = useContext(UserContext);
+  
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -22,7 +23,7 @@ const LoginForm = () => {
       email,
       password,
       () => {
-        router.push("/");
+        router.push("/dashboard");
       },
       () =>
         toast({
@@ -59,7 +60,7 @@ const LoginForm = () => {
         </Link>
       </div>
 
-      <AuthButton text={"Login"} variant="filled" isLoading={loading}/>
+      <AuthButton text={"Login"} variant="filled" isLoading={loading} />
 
       <p className="text-center">OR</p>
     </form>

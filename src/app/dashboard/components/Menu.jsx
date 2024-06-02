@@ -8,6 +8,7 @@ import { UserContext } from "@/utils/auth";
 const Menu = () => {
   const { user } = useContext(UserContext);
 
+
   const menu = [
     { title: "My Tasks", icon: <FaTasks />, link: `/tasks/${user?.$id}` },
     { title: "Projects", icon: <FaCompass />, link: `/projects/${user?.$id}` },

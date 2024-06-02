@@ -6,19 +6,20 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Textarea,
   useToast,
 } from "@chakra-ui/react";
-import { parseDate, getLocalTimeZone } from "@internationalized/date";
+import { parseDate } from "@internationalized/date";
 import { DatePicker } from "@nextui-org/date-picker";
 import React, { useContext, useState } from "react";
 import { ID } from "appwrite";
 import { convertToDate } from "@/utils/convertToDate";
 
-const NewProjectForm = () => {
+const NewProjectForm = ({ onClose }) => {
   const [projectName, setProjectName] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
-  const [dueDate, setDueDate] = useState(parseDate("2024-04-04"));
+  const [dueDate, setDueDate] = useState(parseDate(new Date().toISOString().split("T")[0]));
   const { user } = useContext(UserContext);
   const toast = useToast();
 
@@ -44,6 +45,7 @@ const NewProjectForm = () => {
         isClosable: true,
       });
       setLoading(false);
+      onClose();
     } catch (error) {
       toast({
         title: "An error occored!",
@@ -67,9 +69,10 @@ const NewProjectForm = () => {
 
       <FormControl>
         <FormLabel>Description*</FormLabel>
-        <Input
+        <Textarea
           placeholder="What's this project about?"
           value={description}
+          rows={4}
           onChange={(e) => setDescription(e.target.value)}
         />
       </FormControl>

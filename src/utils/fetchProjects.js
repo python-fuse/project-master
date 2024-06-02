@@ -2,8 +2,6 @@ import { Query } from "appwrite";
 import { database } from "@/scripts/data";
 
 const fetchProjects = async (userId) => {
-  let projects = [];
-
   const promise = await database.listDocuments(
     "project-master",
     "6654a886000b7fd29d6d",
@@ -12,12 +10,12 @@ const fetchProjects = async (userId) => {
         Query.equal("ownerId", userId),
         Query.contains("members", userId),
       ]),
+      Query.orderDesc("updatedAt")
     ]
   );
-  projects = promise.documents;
-  console.log(projects);
 
-  return projects;
+  return promise.documents;
 };
 
 export default fetchProjects;
+

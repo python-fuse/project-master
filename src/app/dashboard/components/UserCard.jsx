@@ -11,11 +11,11 @@ const UserCard = () => {
   return (
     <div className="flex space-x-3">
       <AvatarIcon />
-      <div className="">
-        <Link href={"/profile"} className="font-bold text-lg text-black">
+      <div className="dark:text-white text-black">
+        <Link href={"/profile"} className="font-bold text-lg ">
           Umar Muktar
         </Link>
-        <p className="text-gray-800 text-sm">Software Engineer</p>
+        <p className="light:text-gray-800 text-sm">Software Engineer</p>
       </div>
     </div>
   );

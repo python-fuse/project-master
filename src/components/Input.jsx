@@ -1,19 +1,29 @@
+import { FormControl, Input as ChakraInput } from "@chakra-ui/react";
 const Input = ({ onChange, value, name, type, placeholder }) => {
   return (
-    <div className="space-y-2">
-      <label htmlFor={name} className="text-black dark:text-white">
+    <FormControl className="space-y-2" isRequired>
+      <label htmlFor={name}>
         {name} <span className="text-red-200">*</span>
       </label>
-      <input
+      <ChakraInput
         id={name}
         type={type}
         name={name}
         value={value}
         onChange={onChange}
-        className="outline-none border-4 focus:border-blue-500 bg-transparent rounded-lg border-gray-300 p-4 w-full"
+        colorScheme={"blue"}
+        borderWidth={"4px"}
+        rounded={"8px"}
+        outline={"none"}
+        background={"transparent"}
+        borderColor={"rgb(209 213 219)"}
+        className="w-full"
+        padding={"16px"}
+        height={"60px"}
+        fontSize={20}
         placeholder={placeholder}
       />
-    </div>
+    </FormControl>
   );
 };
 

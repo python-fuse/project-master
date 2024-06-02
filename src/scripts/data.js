@@ -3,7 +3,7 @@ import { Databases, ID } from "appwrite";
 
 export const database = new Databases(client);
 
-const projects = [
+export const projects = [
   {
     projectId: ID.unique(),
     name: "Project Alpha",
@@ -18,6 +18,22 @@ const projects = [
     name: "Project Beta",
     description: "This is the second project.",
     members: ["user2", , "6658f4bde77ceb6a4b21", "user3"],
+    ownerId: "6658f4bde77ceb6a4b21",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    projectId: ID.unique(),
+    name: "Project Beta",
+    description: "This is the second project.",
+    members: [
+      "user2",
+      "user2",
+      "user2",
+      "user2",
+      "6658f4bde77ceb6a4b21",
+      "user3",
+    ],
     ownerId: "6658f4bde77ceb6a4b21",
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -90,15 +106,15 @@ const createDocument = async (collectionId, data) => {
   }
 };
 
-// Create users, projects, tasks, and comments
-export const seedData = async () => {
-  for (const project of projects) {
-    await createDocument("6654a886000b7fd29d6d", project);
-  }
-  // for (const task of tasks) {
-  //   await createDocument("tasks", task);
-  // }
-  // for (const comment of comments) {
-  //   await createDocument("comments", comment);
-  // }
-};
+// // Create users, projects, tasks, and comments
+// export const seedData = async () => {
+//   for (const project of projects) {
+//     await createDocument("6654a886000b7fd29d6d", project);
+//   }
+//   // for (const task of tasks) {
+//   //   await createDocument("tasks", task);
+//   // }
+//   // for (const comment of comments) {
+//   //   await createDocument("comments", comment);
+//   // }
+// };

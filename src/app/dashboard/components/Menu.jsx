@@ -24,7 +24,7 @@ const Menu = () => {
   ));
 
   return (
-    <div className="mt-10 place-items-start">
+    <div className="mt-10 place-items-start dark:text-white text-black">
       <p className="font-bold">Menu</p>
 
       <div className="flex mt-3 flex-col space-y-2">{content}</div>

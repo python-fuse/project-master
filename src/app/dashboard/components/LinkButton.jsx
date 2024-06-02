@@ -1,10 +1,9 @@
 import { Button } from "@chakra-ui/react";
-import Link from "next/link";
 import React from "react";
 
-const LinkButton = ({ text }) => {
+const LinkButton = ({ text, onOpen }) => {
   return (
-    <Button colorScheme={"blue"} size={'md'} as={Link} href={"/projects"}>
+    <Button colorScheme={"blue"} size={"md"} onClick={onOpen}>
       {text}
     </Button>
   );

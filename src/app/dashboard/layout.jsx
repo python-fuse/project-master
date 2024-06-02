@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "./components.jsx/header";
-import LeftSideBar from "./components.jsx/LeftSideBar";
+import Header from "./components/header";
+import LeftSideBar from "./components/LeftSideBar";
 
 export const metadata = {
   title: "Dashboard | Project Master",

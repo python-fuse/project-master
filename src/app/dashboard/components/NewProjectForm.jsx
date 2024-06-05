@@ -79,7 +79,8 @@ const NewProjectForm = ({ onClose }) => {
 
       <FormControl>
         <FormLabel>Due date</FormLabel>
-        <DatePicker
+        <DatePicker 
+        classname='dark'
           label="Due date"
           validate
           errorMessage="Please enter a valid date."

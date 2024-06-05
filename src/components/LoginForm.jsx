@@ -15,10 +15,10 @@ const LoginForm = () => {
   const router = useRouter();
   const toast = useToast();
   const { logIn, error, loading } = useContext(UserContext);
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    
     logIn(
       email,
       password,

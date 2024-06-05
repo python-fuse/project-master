@@ -18,4 +18,3 @@ const fetchProjects = async (userId) => {
 };
 
 export default fetchProjects;
-

@@ -13,7 +13,7 @@ const layout = ({ children }) => {
     <>
       <main className="flex">
         <LeftSideBar />
-        <div className="w-full">
+        <div className="w-full h-screen">
           <Header />
           {children}
         </div>

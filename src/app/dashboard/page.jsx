@@ -1,4 +1,3 @@
-import React from "react";
 import TopTasks from "./components/TopTasks";
 import TopProjects from "./components/TopProjects";
 import UserGreeting from "./components/UserGreeting";

@@ -13,7 +13,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} dark text-foreground bg-background dark:bg-neutral-800 bg-white dark:text-white light:text-black`}>
+      <body
+        className={`${inter.className} dark text-foreground dark:bg-neutral-800 dark:text-white light:text-black`}
+      >
         <UserProvider>
           <ChakraProvider>{children}</ChakraProvider>
         </UserProvider>

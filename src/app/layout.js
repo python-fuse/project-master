@@ -2,8 +2,9 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import { UserProvider } from "@/utils/auth";
+import { ProjectProvider } from "@/utils/ProjectContext";
 
-const inter = Poppins({ subsets: ["latin"], weight: ["500"] });
+const poppins = Poppins({ subsets: ["latin"], weight: ["500"] });
 
 export const metadata = {
   title: "Project Master",
@@ -14,10 +15,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${inter.className} dark text-foreground dark:bg-neutral-800 dark:text-white light:text-black`}
+        className={`${poppins.className} dark text-foreground dark:bg-neutral-800 dark:text-white light:text-black`}
       >
         <UserProvider>
-          <ChakraProvider>{children}</ChakraProvider>
+          <ProjectProvider>
+            <ChakraProvider>{children}</ChakraProvider>
+          </ProjectProvider>
         </UserProvider>
       </body>
     </html>

@@ -1,6 +1,5 @@
 "use client";
 
-import { tasks, todoTasks } from "@/scripts/data";
 import {
   fetchColumns,
   fetchTasks,
@@ -11,17 +10,18 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { useState, useEffect } from "react";
 import Column from "../components/Column";
 import { ID } from "appwrite";
-import { useToast } from "@chakra-ui/react";
+import { Spinner, useToast } from "@chakra-ui/react";
+import { useProject } from "@/utils/ProjectContext";
 
-const project = {
-  projectId: "project1",
-  name: "Project Alpha",
-  description: "This is the first project.",
-  members: ["user1", "user2"],
-  ownerId: "6658f4bde77ceb6a4b21",
-  createdAt: new Date(),
-  updatedAt: new Date(),
-};
+// const project = {
+//   projectId: "project1",
+//   name: "Project Alpha",
+//   description: "This is the first project.",
+//   members: ["user1", "user2"],
+//   ownerId: "6658f4bde77ceb6a4b21",
+//   createdAt: new Date(),
+//   updatedAt: new Date(),
+// };
 
 const transformData = (columns, tasks) => {
   const formattedColumns = {};
@@ -36,50 +36,54 @@ const transformData = (columns, tasks) => {
   return formattedColumns;
 };
 
-const initialColumns = {
-  [ID.unique()]: {
-    name: "Todo",
-    items: todoTasks,
-  },
-  [ID.unique()]: {
-    name: "In Progress",
-    items: [],
-  },
-  [ID.unique()]: {
-    name: "Done",
-    items: [],
-  },
-};
+// const initialColumns = {
+//   [ID.unique()]: {
+//     name: "Todo",
+//     items: todoTasks,
+//   },
+//   [ID.unique()]: {
+//     name: "In Progress",
+//     items: [],
+//   },
+//   [ID.unique()]: {
+//     name: "Done",
+//     items: [],
+//   },
+// };
 
 const Page = ({ params }) => {
-  const [columns, setColumns] = useState(initialColumns);
+  const [columns, setColumns] = useState({});
   // const [project, setProject] = useState({});
+  const { project, setProject } = useProject();
+  const [loading, setLoading] = useState(true);
   const { projectId } = params;
   const toast = useToast();
 
-  // useEffect(() => {
-  //   const loadData = async () => {
-  //     console.log(projectId);
-  //     try {
-  //       const projectRes = await fetchProject(projectId);
-  //       const columnsRes = await fetchColumns(projectId);
-  //       const tasks = await fetchTasks(projectId);
-  //       const formattedColumns = transformData(columnsRes, tasks);
-  //       setColumns(formattedColumns);
-  //       setProject(projectRes);
-  //       console.log(columnsRes);
-  //     } catch (error) {
-  //       console.log(error);
-  //       toast({
-  //         title: "Error",
-  //         status: "error",
-  //         duration: 3000,
-  //         description: error.message,
-  //       });
-  //     }
-  //   };
-  //   loadData();
-  // }, []);
+  useEffect(() => {
+    const loadData = async () => {
+      console.log(projectId);
+      try {
+        const projectRes = await fetchProject(projectId);
+        const columnsRes = await fetchColumns(projectId);
+        const tasks = await fetchTasks(projectId);
+        const formattedColumns = transformData(columnsRes, tasks);
+        setColumns(formattedColumns);
+        setProject(projectRes);
+        console.log(columnsRes);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+        toast({
+          title: "Error",
+          status: "error",
+          duration: 3000,
+          description: error.message,
+        });
+      }
+    };
+    loadData();
+  }, []);
 
   const handleDragEnd = (result, columns, setColumns) => {
     if (!result.destination) return;
@@ -116,6 +120,14 @@ const Page = ({ params }) => {
       });
     }
   };
+
+  if (loading)
+    return (
+      <div className="place-content-center grid h-full w-full">
+        {" "}
+        <Spinner />
+      </div>
+    );
 
   return (
     <main className="grid grid-cols-3 px-10 py-4 gap-5 h-screen bg-transparent flex-1 overflow-y-scroll">

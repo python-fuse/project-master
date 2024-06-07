@@ -1,13 +1,19 @@
 import React from "react";
+import TopBar from "./components/TopBar";
+import SideBar from "./components/SideBar";
+
+export const metadata = {
+  title: "Project | Project Master",
+};
 
 const layout = ({ children }) => {
   return (
-    <main className="flex">
-      <aside className="h-screen w-[300px] overflow-auto">
-        <h2>Bankai</h2>
-      </aside>
-
-      {children}
+    <main className="flex h-screen overflow-hidden">
+      <SideBar />
+      <div className="flex-1">
+        <TopBar />
+        {children}
+      </div>
     </main>
   );
 };

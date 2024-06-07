@@ -8,7 +8,7 @@ const TaskCard = ({ task, members, extraClasses, provided, snapshot }) => {
   return (
     <div
       ref={provided.innerRef}
-      className={`flex flex-col w-[300px] space-y-5 select-none shadow-lg shadow-black rounded-lg p-4 ${
+      className={`flex flex-col w-[300px] space-y-5 select-none hover:bg-blue-600 shadow-lg shadow-black rounded-lg p-4 ${
         snapshot.isDragging ? "bg-neutral-700" : "dark:bg-neutral-800"
       }`}
       {...provided.draggableProps}
@@ -32,7 +32,7 @@ const TaskCard = ({ task, members, extraClasses, provided, snapshot }) => {
       <div className="flex w-max p-1 items-center gap-x-1">
         <FaCalendar />
 
-        <p className="text-sm border p-1 rounded items-center">
+        <p className="text-sm font-bold border border-[3px] p-1 rounded items-center">
           {formatDistanceToNow(task.dueDate)}
         </p>
       </div>

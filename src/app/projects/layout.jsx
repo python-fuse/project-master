@@ -8,7 +8,7 @@ export const metadata = {
 
 const layout = ({ children }) => {
   return (
-    <main className="flex h-screen overflow-hidden">
+    <main className="flex h-screen overflow-y-clip">
       <SideBar />
       <div className="flex-1">
         <TopBar />

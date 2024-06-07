@@ -1,3 +1,4 @@
+"use client";
 import { createContext, useContext, useState } from "react";
 
 const ProjectContext = createContext();
@@ -7,7 +8,7 @@ export const useProject = () => {
 };
 
 export const ProjectProvider = ({ children }) => {
-  const [project, setProject] = useState({});
+  const [project, setProject] = useState(null);
 
   const value = {
     project,

@@ -4,6 +4,7 @@ import {
   fetchColumns,
   fetchTasks,
   fetchProject,
+  updateTaskStatus,
 } from "@/utils/databaseFunctions";
 import TaskCard from "../components/TaskCard";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
@@ -119,6 +120,17 @@ const Page = ({ params }) => {
         },
       });
     }
+
+    try {
+      updateTaskStatus(removed.taskId, destinationColumn.name.toLowerCase());
+    } catch (error) {
+      toast({
+        title: "Error",
+        status: "error",
+        duration: 3000,
+        description: error.message,
+      });
+    }
   };
 
   if (loading)
@@ -130,7 +142,7 @@ const Page = ({ params }) => {
     );
 
   return (
-    <main className="grid grid-cols-3 px-10 py-4 gap-5 h-screen bg-transparent flex-1 overflow-y-scroll">
+    <main className="grid grid-cols-3 px-10 py-4 gap-5 bg-transparent overflow-y-hidden">
       <DragDropContext
         onDragEnd={(result) => handleDragEnd(result, columns, setColumns)}
       >

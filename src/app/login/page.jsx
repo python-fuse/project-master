@@ -1,4 +1,4 @@
-import { FaGoogle, FaTasks } from "react-icons/fa";
+import { FaGoogle } from "react-icons/fa";
 import Link from "next/link";
 import AuthButton from "@/components/AuthButton";
 import Image from "next/image";
@@ -14,7 +14,12 @@ const LoginPage = () => {
   return (
     <div className="flex h-dvh min-h-screen p-10 space-x-10 overflow-hidden">
       <div className="w-1/2 px-10 flex flex-col space-y-3">
-        <FaTasks className="text-6xl text-blue-500" />
+        <Image
+          height={100}
+          className="rounded-xl p-2"
+          width={100}
+          src={"/pm_logo_blue_bg.png"}
+        />
 
         <h2 className="text-4xl font-bold">Welcome back!</h2>
 

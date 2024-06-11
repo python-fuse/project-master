@@ -1,10 +1,59 @@
-import { Avatar, AvatarGroup, Divider, IconButton } from "@chakra-ui/react";
+"use client";
+
+import {
+  Avatar,
+  AvatarGroup,
+  Divider,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  useDisclosure,
+  useToast,
+} from "@chakra-ui/react";
 import { formatDistanceToNow } from "date-fns";
-import React from "react";
-import { FaCalendar, FaComment, FaEllipsisV } from "react-icons/fa";
+import React, { useState } from "react";
+import {
+  FaCalendar,
+  FaComment,
+  FaEllipsisV,
+  FaEdit,
+  FaTrash,
+} from "react-icons/fa";
 import Actions from "./Actions";
+import EditTaskModal from "./EditTaskModal";
+import { deleteTask } from "@/utils/databaseFunctions";
 
 const TaskCard = ({ task, members, extraClasses, provided, snapshot }) => {
+  const [loading, setLoading] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
+
+  const handleDelete = async () => {
+    try {
+      setLoading(true);
+      const res = await deleteTask(task.taskId);
+
+      toast({
+        title: "Task Deleted",
+        status: "success",
+        isClosable: true,
+        duration: 2000,
+      });
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      toast({
+        title: "An error occured!",
+        status: "error",
+        description: error.message,
+        isClosable: true,
+        duration: 2000,
+      });
+    }
+  };
+
   return (
     <div
       ref={provided.innerRef}
@@ -30,13 +79,28 @@ const TaskCard = ({ task, members, extraClasses, provided, snapshot }) => {
           {task.priority}
         </div>
 
-        <IconButton
-          size={"sm"}
-          color={"white"}
-          icon={<FaEllipsisV />}
-          variant={"ghost"}
-        />
+        <Menu>
+          <MenuButton
+            as={IconButton}
+            variant="ghost"
+            color="white"
+            aria-label="Options"
+            icon={<FaEllipsisV />}
+          />
+
+          <MenuList bg="#18181B">
+            <MenuItem bg="#18181B" icon={<FaEdit />} onClick={onOpen}>
+              Edit
+            </MenuItem>
+
+            <MenuItem bg="#18181B" icon={<FaTrash />} onClick={handleDelete}>
+              Delete
+            </MenuItem>
+          </MenuList>
+        </Menu>
       </div>
+
+      <EditTaskModal task={task} onClose={onClose} isOpen={isOpen} />
 
       <h2 className="text-2xl">{task.name}</h2>
 
@@ -55,7 +119,7 @@ const TaskCard = ({ task, members, extraClasses, provided, snapshot }) => {
       <div className="flex justify-between items-center">
         <AvatarGroup max={3} size={"sm"}>
           {members.map((member, id) => (
-            <Avatar key={id} name="member" />
+            <Avatar key={id} name={member} />
           ))}
         </AvatarGroup>
 

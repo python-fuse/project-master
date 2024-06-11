@@ -1,11 +1,11 @@
 import { database } from "@/scripts/data";
-
+import { DATABASEID, PROJECTCOLLECTIONID } from "./databaseFunctions";
 
 const deleteProject = async (projectId) => {
   const res = await database.deleteDocument(
-    "project-master",
-    "6654a886000b7fd29d6d",
-    projectId,
+    DATABASEID,
+    PROJECTCOLLECTIONID,
+    projectId
   );
 
   return res;

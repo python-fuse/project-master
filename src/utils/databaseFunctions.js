@@ -74,3 +74,24 @@ export const updateTaskStatus = async (taskId, newStatus) => {
 
   return promise;
 };
+
+export const deleteTask = async (taskId) => {
+  const promise = await database.deleteDocument(
+    DATABASEID,
+    TASKCOLLECTIONID,
+    taskId
+  );
+
+  return promise;
+};
+
+export const editTask = async (taskId, task) => {
+  const promise = await database.updateDocument(
+    DATABASEID,
+    TASKCOLLECTIONID,
+    taskId,
+    task
+  );
+
+  return promise;
+};

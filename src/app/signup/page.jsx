@@ -13,13 +13,17 @@ export const metadata = {
 
 const RegisterPage = () => {
   return (
-    <div className="flex  h-dvh min-h-screen p-10 space-x-10  ">
-      <div className="w-1/2 px-10 flex flex-col space-y-3">
-        <FaTasks className=" text-blue-500 text-6xl" />
-
+    <div className="flex   min-h-screen p-8 space-x-10  ">
+      <div className="w-1/2 px-10 flex flex-col space-y-1">
+        <Image
+          height={100}
+          className="rounded-xl p-2"
+          width={100}
+          src={"/pm_logo_blue_bg.png"}
+        />
         <h2 className="text-4xl font-bold">Welcome to Project Master!</h2>
 
-        <p>Login to continue managing your projects.</p>
+        <p>Create an account to get started.</p>
         <SignupForm />
         <AuthButton
           icon={<FaGoogle className="text-[28px]" />}

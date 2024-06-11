@@ -15,6 +15,7 @@ import Column from "../components/Column";
 import { Spinner, useToast } from "@chakra-ui/react";
 import { useProject } from "@/utils/ProjectContext";
 import { UserContext } from "@/utils/auth";
+import { toTileCase } from "@/utils/toTitleCase";
 
 const transformData = (columns, tasks) => {
   const formattedColumns = {};
@@ -29,12 +30,11 @@ const transformData = (columns, tasks) => {
   return formattedColumns;
 };
 
-const ProjectPage = ({ params }) => {
+const ProjectPage = ({ projectId }) => {
   const [columns, setColumns] = useState({});
   const [fetchedTasks, setFetchedTasks] = useState([]);
   const { project, setProject } = useProject();
   const [loading, setLoading] = useState(true);
-  const { projectId } = params;
   const toast = useToast();
 
   useEffect(() => {
@@ -131,15 +131,17 @@ const ProjectPage = ({ params }) => {
       });
     }
 
-    try {
-      updateTaskStatus(removed.taskId, destinationColumn.name.toLowerCase());
-    } catch (error) {
-      toast({
-        title: "Error",
-        status: "error",
-        duration: 3000,
-        description: error.message,
-      });
+    if (result.source.droppableId !== result.destination.droppableId) {
+      try {
+        updateTaskStatus(removed.taskId, destinationColumn.name.toLowerCase());
+      } catch (error) {
+        toast({
+          title: "Error",
+          status: "error",
+          duration: 3000,
+          description: error.message,
+        });
+      }
     }
   };
 
@@ -159,7 +161,7 @@ const ProjectPage = ({ params }) => {
           <p className="text-sm">Create a new task from the sidebar</p>
         </div>
       ) : (
-        <main className="grid grid-cols-3 px-10 py-4 gap-5 bg-transparent overflow-y-scroll">
+        <main className="grid grid-cols-3 flex-1 px-10 py-4 p	b-4 gap-5 bg-transparent overflow-auto">
           <DragDropContext
             onDragEnd={(result) => handleDragEnd(result, columns, setColumns)}
           >
@@ -169,7 +171,7 @@ const ProjectPage = ({ params }) => {
                   {(provided, snapshot) => {
                     return (
                       <Column
-                        title={col.name}
+                        title={toTileCase(col.name)}
                         provided={provided}
                         snapshot={snapshot}
                       >

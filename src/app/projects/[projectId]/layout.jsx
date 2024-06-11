@@ -7,15 +7,11 @@ export const metadata = {
 };
 
 
-const { project } = router.searchParams;
-
-console.log(project);
-
 const layout = ({ children }) => {
   return (
     <main className="flex h-screen overflow-y-clip">
       <SideBar />
-      <div className="flex-1">
+      <div className="flex-1 flex flex-col">
         <TopBar />
         {children}
       </div>

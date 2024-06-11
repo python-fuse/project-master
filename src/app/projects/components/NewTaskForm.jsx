@@ -1,6 +1,5 @@
 "use client";
 import { UserContext } from "@/utils/auth";
-import createProject from "@/utils/createDocuments";
 import {
   Button,
   FormControl,
@@ -14,35 +13,43 @@ import { DatePicker } from "@nextui-org/date-picker";
 import React, { useContext, useState } from "react";
 import { ID } from "appwrite";
 import { convertToDate } from "@/utils/convertToDate";
+import { useProject } from "@/utils/ProjectContext";
+import { createTask } from "@/utils/createDocuments";
+import { Select, SelectItem } from "@nextui-org/select";
 
-const NewProjectForm = ({ onClose }) => {
-  const [projectName, setProjectName] = useState("");
+const NewTaskForm = ({ onClose }) => {
+  const [taskName, setTaskName] = useState("");
   const [description, setDescription] = useState("");
+  const [priority, setPriority] = useState("");
   const [loading, setLoading] = useState(false);
+
   const [dueDate, setDueDate] = useState(
     parseDate(new Date().toISOString().split("T")[0])
   );
   const { user } = useContext(UserContext);
+  const { project } = useProject();
   const toast = useToast();
 
-  const project = {
-    projectId: ID.unique(),
-    name: projectName,
+  const taskModel = {
+    taskId: ID.unique(),
+    projectId: project?.$id,
+    name: taskName,
     description: description,
-    members: [user?.$id],
-    ownerId: user?.$id,
+    assigneeId: user.$id,
+    status: "todo",
+    priority: priority ? priority : "medium",
+    dueDate: convertToDate(dueDate),
     createdAt: new Date(),
     updatedAt: new Date(),
-    dueDate: convertToDate(dueDate),
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      const proj = await createProject(project);
+      const task = await createTask(taskModel);
       toast({
-        title: "Project Created Sucessfully",
+        title: "Task Added Successfully!",
         status: "success",
         isClosable: true,
       });
@@ -61,27 +68,43 @@ const NewProjectForm = ({ onClose }) => {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-y-4 py-3 ">
       <FormControl>
-        <FormLabel>Project Name*</FormLabel>
+        <FormLabel>Task Name*</FormLabel>
         <Input
-          placeholder="Enter project name"
-          value={projectName}
-          onChange={(e) => setProjectName(e.target.value)}
+          required
+          placeholder="Enter task name"
+          value={taskName}
+          onChange={(e) => setTaskName(e.target.value)}
         />
       </FormControl>
 
       <FormControl>
         <FormLabel>Description*</FormLabel>
         <Textarea
-          placeholder="What's this project about?"
+          placeholder="What's needed to be done?"
           value={description}
           rows={4}
+          required
           onChange={(e) => setDescription(e.target.value)}
         />
       </FormControl>
 
+      <Select
+        label="Priority"
+        variant="filled"
+        className="w-full"
+        placeholder="Select priority"
+        selectedKeys={[priority]}
+        onChange={(e) => setPriority(e.target.value)}
+      >
+        <SelectItem key="low">Low</SelectItem>
+        <SelectItem key="medium">Medium</SelectItem>
+        <SelectItem key="high">High</SelectItem>
+      </Select>
+
       <FormControl>
         <FormLabel>Due date</FormLabel>
         <DatePicker
+          isRequired
           classname="dark"
           label="Due date"
           validate
@@ -100,4 +123,4 @@ const NewProjectForm = ({ onClose }) => {
   );
 };
 
-export default NewProjectForm;
+export default NewTaskForm;

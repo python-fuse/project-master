@@ -1,10 +1,15 @@
 import React from "react";
-import TopBar from "./components/TopBar";
-import SideBar from "./components/SideBar";
+import TopBar from "../components/TopBar";
+import SideBar from "../components/SideBar";
 
 export const metadata = {
   title: "Project | Project Master",
 };
+
+
+const { project } = router.searchParams;
+
+console.log(project);
 
 const layout = ({ children }) => {
   return (

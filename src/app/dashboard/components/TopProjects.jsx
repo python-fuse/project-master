@@ -6,7 +6,6 @@ import { FaArrowRight } from "react-icons/fa";
 import { UserContext } from "@/utils/auth";
 import fetchProjects from "@/utils/fetchProjects";
 import { Skeleton } from "@nextui-org/skeleton";
-import { database } from "@/scripts/data";
 import client from "@/utils/appwrite";
 
 const TopProjects = () => {
@@ -19,8 +18,8 @@ const TopProjects = () => {
       if (user && user.$id) {
         const fetchedProjects = await fetchProjects(user.$id);
         setProjects(fetchedProjects);
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     if (!userLoading) {
@@ -30,9 +29,15 @@ const TopProjects = () => {
         "databases.project-master.collections.6654a886000b7fd29d6d.documents",
         (response) => {
           if (
-            response.events.includes("databases.*.collections.*.documents.*.create") ||
-            response.events.includes("databases.*.collections.*.documents.*.update") ||
-            response.events.includes("databases.*.collections.*.documents.*.delete")
+            response.events.includes(
+              "databases.*.collections.*.documents.*.create"
+            ) ||
+            response.events.includes(
+              "databases.*.collections.*.documents.*.update"
+            ) ||
+            response.events.includes(
+              "databases.*.collections.*.documents.*.delete"
+            )
           ) {
             loadProjects();
           }
@@ -88,29 +93,27 @@ const TopProjects = () => {
       </div>
 
       <div className="grid grid-cols-4 gap-5">
-        {
-          projects ?
-          (
-          projects.slice(0, 4).map((project) => (
-            <ProjectCard
-              key={project.$id}
-              projectId={project.$id}
-              projectTitle={project.name}
-              description={project.description}
-              members={project.members}
-              createdAt={project.createdAt}
-              updatedAt={project.updatedAt}
-              dueDate={project.dueDate}
-            />
-          ))
-        ) :
-          (
-            <div className="flex flex-col w-full text-center">
-              <h2 className="text-3xl text-red-400">No projects found!</h2>
-              <p>Create a project to get started</p>
-            </div>
-          )
-        }
+        {projects ? (
+          projects
+            .slice(0, 4)
+            .map((project) => (
+              <ProjectCard
+                key={project.$id}
+                projectId={project.$id}
+                projectTitle={project.name}
+                description={project.description}
+                members={project.members}
+                createdAt={project.createdAt}
+                updatedAt={project.updatedAt}
+                dueDate={project.dueDate}
+              />
+            ))
+        ) : (
+          <div className="flex flex-col w-full text-center">
+            <h2 className="text-3xl text-red-400">No projects found!</h2>
+            <p>Create a project to get started</p>
+          </div>
+        )}
       </div>
     </>
   );

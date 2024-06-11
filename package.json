@@ -17,6 +17,7 @@
     "@nextui-org/date-input": "^2.1.0",
     "@nextui-org/date-picker": "^2.1.1",
     "@nextui-org/progress": "^2.0.30",
+    "@nextui-org/select": "^2.2.1",
     "@nextui-org/skeleton": "^2.0.28",
     "@nextui-org/system": "^2.2.1",
     "@nextui-org/theme": "^2.2.5",

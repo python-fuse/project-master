@@ -18,7 +18,18 @@ const TaskCard = ({ task, members, extraClasses, provided, snapshot }) => {
         {...provided.dragHandleProps}
         className="flex justify-between font-bold"
       >
-        <h2 className="text-2xl">{task.name}</h2>
+        <div
+          className={`p-2 rounded-lg ${
+            task.priority == "low"
+              ? "bg-green-400"
+              : task.priority == "medium"
+              ? "bg-yellow-400"
+              : "bg-red-500"
+          } text-xs`}
+        >
+          {task.priority}
+        </div>
+
         <IconButton
           size={"sm"}
           color={"white"}
@@ -27,12 +38,14 @@ const TaskCard = ({ task, members, extraClasses, provided, snapshot }) => {
         />
       </div>
 
+      <h2 className="text-2xl">{task.name}</h2>
+
       <p className="text-neutral-500">{task.description}</p>
 
       <div className="flex w-max p-1 items-center gap-x-1">
         <FaCalendar />
 
-        <p className="text-sm font-bold border border-[3px] p-1 rounded items-center">
+        <p className="text-sm font-bold border-[3px] p-1 rounded items-center">
           {formatDistanceToNow(task.dueDate)}
         </p>
       </div>

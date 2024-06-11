@@ -5,10 +5,8 @@ import client from "./appwrite";
 
 const account = new Account(client);
 
-// Create a context
 export const UserContext = createContext();
 
-// Create a provider component
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -33,9 +31,10 @@ export const UserProvider = ({ children }) => {
   const logIn = async (email, password, next, err) => {
     try {
       setLoading(true);
-      const promise = await account.createEmailPasswordSession(email, password);
-      console.log(promise);
-      setUser(promise);
+      const session = await account.createEmailPasswordSession(email, password);
+      const currentUser = await account.get();
+      console.log(currentUser);
+      setUser(currentUser);
       next();
       setLoading(false);
     } catch (e) {
@@ -61,14 +60,16 @@ export const UserProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    // Optionally, you can add logic here to check if the user is already logged in
     const getCurrentUser = async () => {
       try {
+        setLoading(true);
         const currentUser = await account.get();
         setUser(currentUser);
+        setLoading(false);
       } catch (e) {
         console.log(e);
         setError(e);
+        setLoading(false);
       }
     };
     getCurrentUser();

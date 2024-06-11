@@ -3,7 +3,13 @@
 import React, { useEffect, useState } from "react";
 import { FaPlusCircle } from "react-icons/fa";
 import Membercard from "./Membercard";
-import { IconButton, Button, useToast, Spinner } from "@chakra-ui/react";
+import {
+  IconButton,
+  Button,
+  useToast,
+  Spinner,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { useProject } from "@/utils/ProjectContext";
 import {
   TASKCOLLECTIONID,
@@ -12,12 +18,14 @@ import {
   fetchTodoTasks,
 } from "@/utils/databaseFunctions";
 import client from "@/utils/appwrite";
+import NewTaskModal from "./NewTaskModal";
 
 const SideBar = () => {
   const { project } = useProject();
   const [todoTasks, setTodoTasks] = useState([]);
   const [inProgressTasks, setInProgressTasks] = useState([]);
   const [completedTasks, setCompletedTasks] = useState([]);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
   useEffect(() => {
@@ -67,7 +75,7 @@ const SideBar = () => {
     return () => {
       unsubscribe();
     };
-  }, [project]);
+  }, [project,toast]);
 
   return (
     <aside className="flex justify-between flex-col p-2 h-screen dark:bg-neutral-700 border-r border-gray-700 shadow-lg w-[250px] overflow-auto">
@@ -90,8 +98,11 @@ const SideBar = () => {
                 title="New Task"
                 variant={"ghost"}
                 icon={<FaPlusCircle />}
+                onClick={onOpen}
               />
             </div>
+
+            <NewTaskModal isOpen={isOpen} onClose={onClose} />
 
             <div className="rounded dark:bg-neutral-900 gap-y-2 p-4 grid grid-cols-2">
               <p className="font-bold text-blue-300">Todo</p>

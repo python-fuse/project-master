@@ -18,7 +18,7 @@ const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     logIn(
       email,
       password,
@@ -27,7 +27,7 @@ const LoginForm = () => {
       },
       () =>
         toast({
-          title: "An error occured!",
+          title: "An error occurred!",
           description: error.message,
           duration: 3000,
           status: "error",
@@ -35,6 +35,7 @@ const LoginForm = () => {
         })
     );
   };
+
   return (
     <form className="flex flex-col space-y-3" onSubmit={handleSubmit}>
       <Input

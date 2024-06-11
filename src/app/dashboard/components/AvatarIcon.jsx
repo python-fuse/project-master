@@ -1,6 +1,7 @@
 "use client";
 import { UserContext } from "@/utils/auth";
 import { Avatar } from "@chakra-ui/react";
+import { Skeleton } from "@nextui-org/skeleton";
 import Link from "next/link";
 import React, { useContext } from "react";
 

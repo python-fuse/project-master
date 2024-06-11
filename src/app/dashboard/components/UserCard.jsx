@@ -1,13 +1,9 @@
 "use client";
 
-import React, { useContext } from "react";
 import AvatarIcon from "./AvatarIcon";
-import { UserContext } from "@/utils/auth";
 import Link from "next/link";
 
 const UserCard = () => {
-  const { user, loading } = useContext(UserContext);
-
   return (
     <div className="flex space-x-3">
       <AvatarIcon />
